@@ -1,0 +1,67 @@
+const nameValidation = (name) => {
+  let letter    = new RegExp("^[a-zA-Z]+$");
+  let maxLength = new RegExp("^(?=.{1,25}$)");
+  if(!letter.test(name)){
+    return {status: false, message: 'İsim sadece harf içerebilir'};
+  } else if(!maxLength.test(name)){
+    return {status: false, message: "İsim uzunluğu 1 ile 25 karakter arasında olmalıdır."};
+  } else {
+    return {status: true};
+  }
+}
+
+const usernameValidation = (username) => {
+  let length = new RegExp("^(?=.{3,15}$)"); 
+  let specialCharacter = new RegExp("^(?=.[!@#\$%\^&])");
+  if(!length.test(username)){
+    return {status: false, message: "Kullanıcı adı uzunluğu 3 karakter ile 15 karakter arasında olmalıdır!"};
+  } else if(specialCharacter.test(username)){
+    return {status: false, message: "Kullanıcı adı özel karakterler içeremez!"};
+  } else {
+    return {status: true};
+  }
+}
+
+const emailValidation = (email) => {
+  let emailControl = /^(([^<>()[\]{}'^?\\.,!|//#%*-+=&;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;  
+  if(!emailControl.test(email)){
+    return {status: false, message: "Lütfen geçerli bir e-posta adresi giriniz!"};
+  } else {
+    return {status: true};
+  }
+}
+
+const passwordValidation = (password) => {
+  let lowerCase = new RegExp("^(?=.*[a-z])");
+  let upperCase = new RegExp("^(?=.*[A-Z])");
+  let number    = new RegExp("^(?=.*[0-9])");
+  let length    = new RegExp("^(?=.{6,25}$)");
+  if (!lowerCase.test(password)){
+    return {status: false, message: "Şifre en az 1 küçük harf içermelidir!"};
+  } else if (!upperCase.test(password)){
+    return {status: false, message: "Şifre en az 1 büyük harf içermelidir!"};
+  } else if (!number.test(password)){
+    return {status: false, message: "Şifre en az 1 rakam içermelidir!"};
+  } else if (!length.test(password)){
+    return {status: false, message: "Şifre uzunluğu 6 karakter ile 25 karakter arasında olmalıdır!"};
+  } else {
+    return {status: true};
+  }
+}
+
+const urlValidation = (url) => {
+  let validation = new RegExp(/[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi)
+  if(!validation.test(url)){
+    return { status: false, message: 'Geçersiz URL girdiniz.' }
+  } else {
+    return { status: true }
+  }
+}
+
+module.exports = {
+  nameValidation,
+  usernameValidation,
+  emailValidation,
+  passwordValidation,
+  urlValidation
+}
