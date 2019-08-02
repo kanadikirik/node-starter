@@ -11,7 +11,7 @@ const verifyToken = (req, res, next) => {
       res.locals.decoded = decoded;
       next();
     })
-    .catch(err => next(createError("", 400, "invalid-token")))
+    .catch(() => next(createError("", 400, "invalid-token")))
   } else {
     next(createError("", 400, `token-is-${token}`));
   }
@@ -29,11 +29,9 @@ const verifyAdmin = (req, res, next) => {
 const verifyPassword = (req, res, next) => {
   const password = req.body.password || req.body.oldPassword;
   const email = req.body.email || res.locals.decoded.email;
-  User.findOne({ email })
-  .then(user => {
+  User.findOne({ email }).then(user => {
     if(user){
-      Helper.user.compareHash(password, user.password)
-      .then(status => {
+      Helper.user.compareHash(password, user.password).then(status => {
         if(status){
           res.locals.user = user;
           next();
