@@ -1,3 +1,29 @@
+const objectKeysNullCheck = (object, checkEmptyString) => {
+  if(object){
+    let status = true;
+    Object.keys(object).map(key => {
+      if(checkEmptyString)
+        if(!object[key] || object[key].length === 0) status = false  
+      else 
+        if(!object[key]) status = false 
+    })
+    return status;
+  } else 
+      return false;
+}
+
+const objectArrayNullCheck = (objectArray, checkEmptyString) => {
+  if(objectArray && Array.isArray(objectArray)){
+    let status = true;
+    objectArray.map(object => {
+      if(!objectKeysNullCheck(object, checkEmptyString))
+        status = false
+    })
+    return status;
+  } else 
+      return false
+}
+
 const nameValidation = (name) => {
   let letter    = new RegExp("^[a-zA-Z]+$");
   let maxLength = new RegExp("^(?=.{1,25}$)");
@@ -59,6 +85,8 @@ const urlValidation = (url) => {
 }
 
 module.exports = {
+  objectKeysNullCheck,
+  objectArrayNullCheck,
   nameValidation,
   usernameValidation,
   emailValidation,
